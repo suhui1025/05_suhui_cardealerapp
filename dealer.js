@@ -138,6 +138,7 @@ function makeCarBoxesDroppable(brand) {
       $dragBox.css(removeMarginStyle);
       count--;
       $dragBox.addClass('selected');
+      currentClient = $dragBox;
       next_qns();
       var dialogOption = {
         scrolling: 'no'
@@ -229,13 +230,13 @@ function showCashierDialog(dragClient) {
         cars_sold += 1;
         amount += calcost(dragClient);
         update();
-        removeBox(dragClient, -235);
+        removeBox(dragClient, "-=210");
         $(this).dialog("close");
       },
 
       "No and Exit": function () {
 
-        removeBox(dragClient, -250);
+        removeBox(dragClient, "-=210");
         $(this).dialog("close");
 
       }
@@ -299,31 +300,132 @@ function hideAllPages() {
 }
 
 function next_qns() {
-  var current = questions[qnsIndex];
-  var questionTitle = $("#questionTitle");
-  questionTitle.html((qnsIndex + 1) + ". " + current.qns);
+  if (qnsIndex < questions.length) {
+    var current = questions[qnsIndex];
+    var questionTitle = $("#questionTitle");
+    questionTitle.html((qnsIndex + 1) + ". " + current.qns);
 
-  var optA = current.choices[0];
-  var optA_Box = $("#optionA");
-  optA_Box.html(optA.title);
+    var optA = current.choices[0];
+    var optA_Box = $("#optionA");
+    optA_Box.html(optA.title);
 
-  var optB = current.choices[1];
-  var optB_Box = $("#optionB");
-  optB_Box.html(optB.title);
+    var optB = current.choices[1];
+    var optB_Box = $("#optionB");
+    optB_Box.html(optB.title);
 
-  var optC = current.choices[2];
-  var optC_Box = $("#optionC");
-  optC_Box.html(optC.title);
+    var optC = current.choices[2];
+    var optC_Box = $("#optionC");
+    optC_Box.html(optC.title);
 
-  var optD = current.choices[3];
-  var optD_Box = $("#optionD");
-  optD_Box.html(optD.title);
+    var optD = current.choices[3];
+    var optD_Box = $("#optionD");
+    optD_Box.html(optD.title);
 
-  optA_Box.css("background-color", "palegreen");
-  optB_Box.css("background-color", "palegreen");
-  optC_Box.css("background-color", "palegreen");
-  optD_Box.css("background-color", "palegreen");
-  qnsIndex++;
+    optA_Box.css("background-color", "palegreen");
+    optB_Box.css("background-color", "palegreen");
+    optC_Box.css("background-color", "palegreen");
+    optD_Box.css("background-color", "palegreen");
+    qnsIndex++;
+  } else {
+    qnsIndex = 0;
+    var totalScore = 0;
+
+    for (var i = 0; i < selections.length; i++) {
+      var selection = selections[i];
+      var question = null;
+
+      for (var h = 0; h < questions.length; h++) {
+        var q = questions[h];
+        if (q.no == selection.qnsNo) {
+          question = q;
+          break;
+        }
+      }
+      if (selection.selected == question.correctAns) {
+        totalScore += parseInt(question.points);
+      }
+    }
+
+    var totalMarks = 0;
+    for (var h = 0; h < questions.length; h++) {
+      var q = questions[h];
+      totalMarks += parseInt(question.points);
+    }
+
+    var percScore = (totalScore / totalMarks) * 100;
+    var failed = true;
+
+    if (percScore > 50) {
+      failed = false;
+    }
+
+    var resultPanel = $("#result-panel");
+    resultPanel.css("display", "block");
+
+    var questionPanel = $("#question-panel");
+    questionPanel.css("display", "none");
+
+    var scoreBox = $("#totalScore");
+    scoreBox.html("Score: " + totalScore + "/" + totalMarks);
+
+    var result = "";
+    if (failed == true) {
+      result = "<img src='images/tenor.gif' width='250' height='200' alt='failed'/>";
+    } else {
+      result = "<img src='images/excellent.png' width='250' height='200' alt='failed'/>";
+    }
+    var myresult = $("#myresult");
+    myresult.html(result);
+
+    var closeResultButton = $("#closeResultButton");
+    closeResultButton.click(function () {
+      $.fancybox.close();
+      selections = [];
+      questionPanel.css("display", "none");
+      resultPanel.css("display", "none");
+
+      var clientX = currentClient.offset().left;
+      var clientY = currentClient.offset().top;
+      if (failed == true) {
+        var exit = $("#exit_img_holder");
+        var exitX = exit.offset().left;
+        var exitY = exit.offset().top;
+
+        var diffX = exitX - clientX;
+        var diffY = exitY - clientY;
+
+        currentClient.css("zIndex", 3000);
+        currentClient.animate({
+            left: "+=" + diffX,
+            top: "+=" + diffY,
+          },
+          1000).fadeOut(2000, function () {
+          count--;
+          newClient();
+        });
+
+      } else {
+        var cashier = $("#cashier_img_holder");
+        var cashierX = cashier.offset().left;
+        var cashierY = cashier.offset().top;
+
+        var diffX = cashierX - clientX;
+        var diffY = cashierY - clientY;
+
+        currentClient.css("zIndex", 3000);
+        currentClient.animate({
+            left: "+=" + diffX,
+            top: "+=" + diffY,
+          },
+          1000,
+          function () {
+            showCashierDialog(currentClient);
+          });
+      }
+	  closeResultButton.unbind();
+    });
+  }
+
 }
 
 function ansBox_click(selectedChoice) {
@@ -337,14 +439,11 @@ function ansBox_click(selectedChoice) {
   optD_Box.css("background-color", "palegreen");
   if (selectedChoice == "a") {
     optA_Box.css("background-color", "khaki");
-  } 
-  else if (selectedChoice == "b") {
+  } else if (selectedChoice == "b") {
     optB_Box.css("background-color", "khaki");
-  } 
-  else if (selectedChoice == "c") {
+  } else if (selectedChoice == "c") {
     optC_Box.css("background-color", "khaki");
-  } 
-  else {
+  } else {
     optD_Box.css("background-color", "khaki");
   }
   var selection = {
