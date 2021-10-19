@@ -422,7 +422,7 @@ function next_qns() {
             showCashierDialog(currentClient);
           });
       }
-	  closeResultButton.unbind();
+      closeResultButton.unbind();
     });
   }
 
