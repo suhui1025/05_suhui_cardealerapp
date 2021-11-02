@@ -6,76 +6,201 @@ var clients_served = 0;
 var cars_sold = 0;
 var amount = 0;
 var brandcost = new Array(72500, 23930, 31260, 43990);
+var selectedCategory = "";
 
 var questions = [{
-    "qns": "___ you happy today?",
+    "qns": "Which year was the latest model released in?",
+    "no": "1",
+    "correctAns": "a",
+    "category": "Porsche",
+    "points": "2",
+    "choices": [{
+        "title": "2019",
+        "no": "a"
+      },
+      {
+        "title": "2018",
+        "no": "b"
+      },
+      {
+        "title": "2017",
+        "no": "c"
+      },
+      {
+        "title": "2016",
+        "no": "d"
+      }
+    ]
+  },
+  {
+    "qns": "In which year was Porsche the main trend of the market?",
+    "no": "2",
+    "correctAns": "b",
+    "category": "Porsche",
+    "points": "2",
+    "choices": [{
+        "title": "2016",
+        "no": "a"
+      },
+      {
+        "title": "2015",
+        "no": "b"
+      },
+      {
+        "title": "2014",
+        "no": "c"
+      },
+      {
+        "title": "2013",
+        "no": "d"
+      }
+    ]
+  },
+  {
+    "qns": "What is the warranty period?",
+    "no": "1",
+    "correctAns": "a",
+    "category": "Volkswagen",
+    "points": "2",
+    "choices": [{
+        "title": "1",
+        "no": "a"
+      },
+      {
+        "title": "2",
+        "no": "b"
+      },
+      {
+        "title": "3",
+        "no": "c"
+      },
+      {
+        "title": "4",
+        "no": "d"
+      }
+    ]
+  },
+  {
+    "qns": "Which country was this brand found in?",
+    "no": "2",
+    "correctAns": "c",
+    "category": "Volkswagen",
+    "points": "2",
+    "choices": [{
+        "title": "America",
+        "no": "a"
+      },
+      {
+        "title": "Europe",
+        "no": "b"
+      },
+      {
+        "title": "Singapore",
+        "no": "c"
+      },
+      {
+        "title": "China",
+        "no": "d"
+      }
+    ]
+  },
+  {
+    "qns": "What was the percentage of the satisfied customers for this brand?",
+    "no": "1",
+    "correctAns": "d",
+    "category": "BMW",
+    "points": "2",
+    "choices": [{
+        "title": "100%",
+        "no": "a"
+      },
+      {
+        "title": "90%",
+        "no": "b"
+      },
+      {
+        "title": "80%",
+        "no": "c"
+      },
+      {
+        "title": "70%",
+        "no": "d"
+      }
+    ]
+  },
+  {
+    "qns": "Which age group of people would purchase BMW the most?",
+    "no": "2",
+    "correctAns": "a",
+    "category": "BMW",
+    "points": "2",
+    "choices": [{
+        "title": "20-30",
+        "no": "a"
+      },
+      {
+        "title": "30-40",
+        "no": "b"
+      },
+      {
+        "title": "40-50",
+        "no": "c"
+      },
+      {
+        "title": "50-60",
+        "no": "d"
+      }
+    ]
+  },
+  {
+    "qns": "Which country was this brand found in?",
     "no": "1",
     "correctAns": "c",
+    "category": "Audi",
     "points": "2",
     "choices": [{
-        "title": "at",
+        "title": "America",
         "no": "a"
       },
       {
-        "title": "was",
+        "title": "Europe",
         "no": "b"
       },
       {
-        "title": "are",
+        "title": "Singapore",
         "no": "c"
       },
       {
-        "title": "were",
+        "title": "China",
         "no": "d"
       }
     ]
   },
   {
-    "qns": "Will you come ___ class tomorrow?",
+    "qns": "Which colour is the most popular for Audi models?",
     "no": "2",
-    "correctAns": "d",
+    "correctAns": "a",
+    "category": "Audi",
     "points": "2",
     "choices": [{
-        "title": "was",
+        "title": "black",
         "no": "a"
       },
       {
-        "title": "in",
+        "title": "white",
         "no": "b"
       },
       {
-        "title": "at",
+        "title": "navy",
         "no": "c"
       },
       {
-        "title": "to",
-        "no": "d"
-      }
-    ]
-  },
-  {
-    "qns": "Where ___ you from?",
-    "no": "3",
-    "correctAns": "c",
-    "points": "2",
-    "choices": [{
-        "title": "to",
-        "no": "a"
-      },
-      {
-        "title": "at",
-        "no": "b"
-      },
-      {
-        "title": "are",
-        "no": "c"
-      },
-      {
-        "title": "were",
+        "title": "violet",
         "no": "d"
       }
     ]
   }
+
 ];
 
 var qnsIndex = 0;
@@ -101,7 +226,6 @@ function newClient() {
       zIndex: 1
     };
     $firstClient.draggable(clientDragOption);
-    console.log($firstClient.html());
   }
   setTimeout(function () {
     newClient();
@@ -138,7 +262,9 @@ function makeCarBoxesDroppable(brand) {
       $dragBox.css(removeMarginStyle);
       count--;
       $dragBox.addClass('selected');
+
       currentClient = $dragBox;
+      selectedCategory = brand;
       next_qns();
       var dialogOption = {
         scrolling: 'no'
@@ -300,8 +426,15 @@ function hideAllPages() {
 }
 
 function next_qns() {
-  if (qnsIndex < questions.length) {
-    var current = questions[qnsIndex];
+  var filteredQns = [];
+  for (var i = 0; i < questions.length; i++) {
+    var question = questions[i];
+    if (question.category == selectedCategory) {
+      filteredQns.push(question);
+    }
+  }
+  if (qnsIndex < filteredQns.length) {
+    var current = filteredQns[qnsIndex];
     var questionTitle = $("#questionTitle");
     questionTitle.html((qnsIndex + 1) + ". " + current.qns);
 
@@ -327,15 +460,22 @@ function next_qns() {
     optD_Box.css("background-color", "palegreen");
     qnsIndex++;
   } else {
+    var questionPanel = $("#question-panel");
+    questionPanel.css("display", "none");
+
+    var resultPanel = $("#result-panel");
+    resultPanel.css("display", "block");
+
     qnsIndex = 0;
+
     var totalScore = 0;
 
     for (var i = 0; i < selections.length; i++) {
       var selection = selections[i];
       var question = null;
 
-      for (var h = 0; h < questions.length; h++) {
-        var q = questions[h];
+      for (var h = 0; h < filteredQns.length; h++) {
+        var q = filteredQns[h];
         if (q.no == selection.qnsNo) {
           question = q;
           break;
@@ -347,8 +487,8 @@ function next_qns() {
     }
 
     var totalMarks = 0;
-    for (var h = 0; h < questions.length; h++) {
-      var q = questions[h];
+    for (var h = 0; h < filteredQns.length; h++) {
+      var q = filteredQns[h];
       totalMarks += parseInt(question.points);
     }
 
@@ -358,12 +498,6 @@ function next_qns() {
     if (percScore > 50) {
       failed = false;
     }
-
-    var resultPanel = $("#result-panel");
-    resultPanel.css("display", "block");
-
-    var questionPanel = $("#question-panel");
-    questionPanel.css("display", "none");
 
     var scoreBox = $("#totalScore");
     scoreBox.html("Score: " + totalScore + "/" + totalMarks);
