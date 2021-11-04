@@ -28,9 +28,7 @@
 </nav>
 <div id="app">
   <div id="splash" class="page-panel">
-    <div id="logo"> 
-	<img src="images/logo.jpg" alt="logo">  
-	</div>
+    <div id="logo"> <img src="images/logo.jpg" alt="logo"> </div>
     <div class="game-button" onClick="showPage('play')"> START GAME </div>
   </div>
   <div id="play" class="page-panel">
@@ -38,7 +36,7 @@
       <div id="clients_queue"> clients queue </div>
       <div id="cars_place">
         <div id="porsche" class="place">
-			<h4>Porsche</h4>
+          <h4>Porsche</h4>
           <div class="car"> <img src="images/Porsche_1.jpg"> </div>
           <div class="car"> <img src="images/Porsche_1.jpg"> </div>
           <div class="car"> <img src="images/Porsche_1.jpg"> </div>
@@ -86,63 +84,96 @@
       <p>Do you want to make payment?</p>
     </div>
   </div>
-  <div id="about" class="page-panel" style="border: 3px dotted #a559c9"> 
-	  <h1><b>About Us</b></h1>
-	  <h2 style="font-size: 20px">Car Dealer is an interactive app solely for entertainment purpose <br> developed by Kuruma Company, found in 2002.<br><br>Throughout these 19 years, we have developed countless interactive apps <br> that are simple yet enjoyable, which allow users to enjoy <br> a sense of entertainment during their free time. <br><br>In the coming 2022, we are working on several new apps<br>which we will be releasing info about them soon. <br>Check out our official website for latest news.</h2>
-	  <a href="#"> http://kuruma.com.sg</a>
-	  <br>
-	  <div><ul id="images">
-	  <li><img src="images/about_img1.jpg" alt="img1"></li>
-	  <li><img src="images/about_img2.jpg" alt="img2"></li>
-	  <li><img src="images/about_img3.jpg" alt="img3"></li>
-	  <li><img src="images/about_img4.jpg" alt="img4"></li>
-	</ul>
-	  </div>
+  <div id="about" class="page-panel" style="border: 3px dotted #a559c9">
+    <h1><b>About Us</b></h1>
+    <h2 style="font-size: 20px">Car Dealer is an interactive app solely for entertainment purpose <br>
+      developed by Kuruma Company, found in 2002.<br>
+      <br>
+      Throughout these 19 years, we have developed countless interactive apps <br>
+      that are simple yet enjoyable, which allow users to enjoy <br>
+      a sense of entertainment during their free time. <br>
+      <br>
+      In the coming 2022, we are working on several new apps<br>
+      which we will be releasing info about them soon. <br>
+      Check out our official website for latest news.</h2>
+    <h2><a href="#"> http://kuruma.com.sg</a> </h2><br>
+    <div>
+      <ul id="images">
+        <li><img src="images/about_img1.jpg" alt="img1"></li>
+        <li><img src="images/about_img2.jpg" alt="img2"></li>
+        <li><img src="images/about_img3.jpg" alt="img3"></li>
+        <li><img src="images/about_img4.jpg" alt="img4"></li>
+      </ul>
+    </div>
   </div>
-  <div id="credits" class="page-panel" style="border: 3px dotted #a559c9"> 
-  <h1><b>Credits</b></h1>
+  <div id="credits" class="page-panel" style="border: 3px dotted #a559c9">
+    <h1><b>Credits</b></h1>
   </div>
   <div id="help" class="page-panel" style="border: 3px dotted #a559c9">
-  <h1><b>Help</b></h1>
+    <h1><b>Help / Contact</b></h1>
+    <div id="Contact_Us">
+      <form action="mailto:kuruma_contact@gmail.com" method="post" id="Mailform" name="Mailform">
+        <div> Name:
+          <input name="Username" type="text" required="required" id="username" size="70" maxlength="40">
+        </div>
+        <br>
+        <div> Email:
+          <input name="Useremail" type="email" required="required" id="useremail" size="70" maxlength="40">
+        </div>
+        <br>
+        <div> Message:
+          <textarea class="labels" name="Comments" cols="40" rows="6" WRAP></textarea>
+        </div>
+        <br>
+        <div>
+          <input name="submit" type="Submit" value="submit">
+        </div>
+      </form>
+      <br>
+      <h3><b>Address Info</b></h3>
+      <h4>Blk 140 Petir Road  #04-324 S670140</h4>
+      <h3><b>Contact Info</b></h3>
+      <h4><b>Phone:</b> +65 66571005 | +65 66570805 <br>
+        <b>Fax:</b> +65 67840627 |
+        <b>Mobile</b>: +65 90851005 <br>
+        <br>
+        <b>Email Address:</b> kuruma_contact@gmail.com <br>
+        <br>
+      </h4>
+    </div>
   </div>
   <div id="mcq" style="display: none">
-	<div id="question-panel">
-	  	<div class="row">
-			<div class="col-12">
-				<span id="questionTitle"></span>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-6">
-				<div class="mcq-choice" id="optionA" onClick="ansBox_click('a')">Answer A</div>
-			</div>
-			<div class="col-6">
-				<div class="mcq-choice" id="optionB" onClick="ansBox_click('b')">Answer B</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-6">
-				<div class="mcq-choice" id="optionC" onClick="ansBox_click('c')">Answer C</div>
-			</div>
-			<div class="col-6">
-				<div class="mcq-choice" id="optionD" onClick="ansBox_click('d')">Answer D</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<a onClick="next_qns()">
-					<img src="images/next.png" width="100" height="50" alt="next">
-				</a>
-			</div>
-		</div>
-	</div>
-	<div id="result-panel" style="display:none">
-		<div id="myresult"></div>  
-	  	<div id="totalScore"></div>
-		<div>
-			<input type="button" id="closeResultButton" value="Close">
-		</div>
-	</div>
+    <div id="question-panel">
+      <div class="row">
+        <div class="col-12"> <span id="questionTitle"></span> </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="mcq-choice" id="optionA" onClick="ansBox_click('a')">Answer A</div>
+        </div>
+        <div class="col-6">
+          <div class="mcq-choice" id="optionB" onClick="ansBox_click('b')">Answer B</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="mcq-choice" id="optionC" onClick="ansBox_click('c')">Answer C</div>
+        </div>
+        <div class="col-6">
+          <div class="mcq-choice" id="optionD" onClick="ansBox_click('d')">Answer D</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12"> <a onClick="next_qns()"> <img src="images/next.png" width="100" height="50" alt="next"> </a> </div>
+      </div>
+    </div>
+    <div id="result-panel" style="display:none">
+      <div id="myresult"></div>
+      <div id="totalScore"></div>
+      <div>
+        <input type="button" id="closeResultButton" value="Close">
+      </div>
+    </div>
   </div>
 </div>
 </body>
