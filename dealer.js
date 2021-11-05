@@ -454,10 +454,10 @@ function next_qns() {
     var optD_Box = $("#optionD");
     optD_Box.html(optD.title);
 
-    optA_Box.css("background-color", "palegreen");
-    optB_Box.css("background-color", "palegreen");
-    optC_Box.css("background-color", "palegreen");
-    optD_Box.css("background-color", "palegreen");
+    optA_Box.css("background-color", "white");
+    optB_Box.css("background-color", "white");
+    optC_Box.css("background-color", "white");
+    optD_Box.css("background-color", "white");
     qnsIndex++;
   } else {
     var questionPanel = $("#question-panel");
@@ -504,9 +504,9 @@ function next_qns() {
 
     var result = "";
     if (failed == true) {
-      result = "<img src='images/tenor.gif' width='250' height='200' alt='failed'/>";
+      result = "<img src='images/failed.jpg' width='250' height='200' alt='failed'/>";
     } else {
-      result = "<img src='images/excellent.png' width='250' height='200' alt='failed'/>";
+      result = "<img src='images/excellent.jpg' width='250' height='200' alt='failed'/>";
     }
     var myresult = $("#myresult");
     myresult.html(result);
@@ -567,18 +567,18 @@ function ansBox_click(selectedChoice) {
   var optB_Box = $("#optionB");
   var optC_Box = $("#optionC");
   var optD_Box = $("#optionD");
-  optA_Box.css("background-color", "palegreen");
-  optB_Box.css("background-color", "palegreen");
-  optC_Box.css("background-color", "palegreen");
-  optD_Box.css("background-color", "palegreen");
+  optA_Box.css("background-color", "white");
+  optB_Box.css("background-color", "white");
+  optC_Box.css("background-color", "white");
+  optD_Box.css("background-color", "white");
   if (selectedChoice == "a") {
-    optA_Box.css("background-color", "khaki");
+    optA_Box.css("background-color", "lightblue");
   } else if (selectedChoice == "b") {
-    optB_Box.css("background-color", "khaki");
+    optB_Box.css("background-color", "lightblue");
   } else if (selectedChoice == "c") {
-    optC_Box.css("background-color", "khaki");
+    optC_Box.css("background-color", "lightblue");
   } else {
-    optD_Box.css("background-color", "khaki");
+    optD_Box.css("background-color", "lightblue");
   }
   var selection = {
     "qnsNo": qnsIndex,
